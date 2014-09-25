@@ -3,14 +3,11 @@ import sublime_plugin
 
 class OpenViewCommand(sublime_plugin.WindowCommand):
 	def run(self):
-		window = self.window
-		view = window.active_view()
+		view = self.window.active_view()
 		sel = view.sel()
-		for s in sel:
-			base_path = view.file_name().split('/')[:-2]
-			base_path = "/".join(base_path)
-			view_names = view.file_name().split('/')[-1].split('_')[:-1]
-			view_name = "_".join(view_names)
-			file_name = base_path+"/views/"+view_name+"/"+view.substr(s)+".html.erb"
-			print (file_name)
-		buffer = window.open_file(file_name)
+		for text in sel:
+			base = view.file_name().split('controllers/')
+			base_path = "/".join(base[:-1])
+			middle_path = base[-1].split("_controller")[0]
+			file_name = base_path+"views/"+middle_path+"/"+view.substr(text)+".html.erb"
+		buffer = self.window.open_file(file_name)
