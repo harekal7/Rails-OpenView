@@ -12,7 +12,8 @@ class OpenViewCommand(sublime_plugin.WindowCommand):
 			search_result = re.search("def[ ]+%s"%word, line)
 			if search_result:
 				base = view.file_name().split('controllers/')
-				base_path = "/".join(base[:-1])
-				middle_path = base[-1].split("_controller")[0]
-				file_name = base_path+"views/"+middle_path+"/"+view.substr(view.word(text))+".html.erb"
-				buffer = self.window.open_file(file_name)
+				if len(base)>1:
+					base_path = "/".join(base[:-1])
+					middle_path = base[-1].split("_controller")[0]
+					file_name = base_path+"views/"+middle_path+"/"+view.substr(view.word(text))+".html.erb"
+					buffer = self.window.open_file(file_name)
