@@ -1,6 +1,8 @@
 OpenView
 ========
 
+Open Associated View for methods in a controller in Rails.
+
 ### Installation for Sublime Text
 #### Package Control (highly recommended)
 Open command palette and type `Install Package` then type `OpenView` and hit `Enter` or `Return`. Package Control will automatically download, install and update for you.
