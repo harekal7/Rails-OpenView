@@ -1,36 +1,25 @@
 import sublime
 import sublime_plugin
-import re
 import os
 
 class OpenViewCommand(sublime_plugin.WindowCommand):
-	
+
 	def search(self, view, text):
 		word = view.substr(view.word(text))
 		line = view.substr(view.line(text))
-		search_result = re.search("def[ ]+%s"%word, line)
+		search_str = "def[ ]+"+word+\
+					 "|redirect_to[ ]+:"+word+\
+					 "|redirect_to[ ]+\""+word+"\""\
+					 "|redirect_to[ ]+:action[ ]+=>[ ]+:"+word+\
+					 "|redirect_to[ ]+:action[ ]+=>[ ]+:\""+word+"\""\
+					 "|render[ ]+:"+word+\
+					 "|render[ ]+\""+word+"\""\
+					 "|render[ ]+:action[ ]+=>[ ]+:"+word+\
+					 "|render[ ]+:action[ ]+=>[ ]+\""+word+"\""
+
+		search_result = re.search(search_str, line)
 		if search_result:
 			self.get_view(view, text)
-		else:
-			search_result = re.search("redirect_to[ ]+:%s"%word, line)
-			if search_result:
-				self.get_view(view, text)
-			else:
-				search_result = re.search("redirect_to[ ]+\"%s\""%word, line)
-				if search_result:
-					self.get_view(view, text)
-				else:
-					search_result = re.search("render[ ]+\"%s\""%word, line)
-					if search_result:
-						self.get_view(view, text)
-					else:
-						search_result = re.search("render[ ]+:action[ ]+=>[ ]+:%s"%word, line)
-						if search_result:
-							self.get_view(view, text)
-						else:
-							search_result = re.search("render[ ]+:action[ ]+=>[ ]+\"%s\""%word, line)
-							if search_result:
-								self.get_view(view, text)
 
 	def get_view(self, view, text):
 		base = view.file_name().split('controllers/')
