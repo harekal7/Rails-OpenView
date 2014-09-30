@@ -5,22 +5,23 @@ import re
 
 class RailsOpenViewCommand(sublime_plugin.WindowCommand):
 
+	search_expressions = (r'def +%s',
+                      r'redirect_to +"%s"',
+                      r"redirect_to +'%s'",
+                      r'redirect_to +:%s',
+                      r'redirect_to +"%s"',
+                      r"redirect_to +'%s'",
+                      r'render +"%s"',
+                      r"render +'%s'",
+                      r'render +:action +=> +:%s',
+                      r'render +:action +=> +"%s"',
+                      r"render +:action +=> +'%s'")
+
 	def search(self, view, text):
 		word = view.substr(view.word(text))
 		line = view.substr(view.line(text))
-		search_str = "def[ ]+"+word+\
-					 "|redirect_to[ ]+:"+word+\
-					 "|redirect_to[ ]+\""+word+"\""\
-					 "|redirect_to[ ]+:action[ ]*=>[ ]*:"+word+\
-					 "|redirect_to[ ]+:action[ ]*=>[ ]*\""+word+"\""\
-					 "|redirect_to[ ]+:action[ ]*=>[ ]*\'"+word+"\'"\
-					 "|render[ ]+:"+word+\
-					 "|render[ ]+\""+word+"\""\
-					 "|render[ ]+:action[ ]*=>[ ]*:"+word+\
-					 "|render[ ]+:action[ ]*=>[ ]*\""+word+"\""\
-					 "|render[ ]+:action[ ]*=>[ ]*\'"+word+"\'"
 
-		search_result = re.search(search_str, line)
+		search_result = any(re.search(e % word, line) for e in self.search_expressions)
 		if search_result:
 			self.get_view(view, text)
 
