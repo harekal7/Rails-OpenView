@@ -1,8 +1,9 @@
 import sublime
 import sublime_plugin
 import os
+import re
 
-class OpenViewCommand(sublime_plugin.WindowCommand):
+class RailsOpenViewCommand(sublime_plugin.WindowCommand):
 
 	def search(self, view, text):
 		word = view.substr(view.word(text))
@@ -10,12 +11,14 @@ class OpenViewCommand(sublime_plugin.WindowCommand):
 		search_str = "def[ ]+"+word+\
 					 "|redirect_to[ ]+:"+word+\
 					 "|redirect_to[ ]+\""+word+"\""\
-					 "|redirect_to[ ]+:action[ ]+=>[ ]+:"+word+\
-					 "|redirect_to[ ]+:action[ ]+=>[ ]+:\""+word+"\""\
+					 "|redirect_to[ ]+:action[ ]*=>[ ]*:"+word+\
+					 "|redirect_to[ ]+:action[ ]*=>[ ]*\""+word+"\""\
+					 "|redirect_to[ ]+:action[ ]*=>[ ]*\'"+word+"\'"\
 					 "|render[ ]+:"+word+\
 					 "|render[ ]+\""+word+"\""\
-					 "|render[ ]+:action[ ]+=>[ ]+:"+word+\
-					 "|render[ ]+:action[ ]+=>[ ]+\""+word+"\""
+					 "|render[ ]+:action[ ]*=>[ ]*:"+word+\
+					 "|render[ ]+:action[ ]*=>[ ]*\""+word+"\""\
+					 "|render[ ]+:action[ ]*=>[ ]*\'"+word+"\'"
 
 		search_result = re.search(search_str, line)
 		if search_result:
