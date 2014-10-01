@@ -6,14 +6,18 @@ import re
 class RailsOpenViewCommand(sublime_plugin.WindowCommand):
 
 	search_expressions = (r'def +%s',
+					  r'redirect_to +:action +=> +:%s',
+                      r'redirect_to +:action +=> +"%s"',
+                      r"redirect_to +:action +=> +'%s'",
                       r'redirect_to +"%s"',
                       r"redirect_to +'%s'",
                       r'redirect_to +:%s',
-                      r'render +"%s"',
-                      r"render +'%s'",
                       r'render +:action +=> +:%s',
                       r'render +:action +=> +"%s"',
-                      r"render +:action +=> +'%s'")
+                      r"render +:action +=> +'%s'",
+                      r'render +"%s"',
+                      r"render +'%s'",
+                      r"render +:%s")
 
 	def search(self, view, text):
 		word = view.substr(view.word(text))
