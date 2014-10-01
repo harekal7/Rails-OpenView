@@ -23,9 +23,6 @@ add `{ "keys": ["super+d"], "command": "rails_open_view" }`,
 
 ** You may use any other key bindings, whichever you will be comfortable with instead of `super+d`
 
-** If this is the only entry in this file, then you will have to wrap it around with `[]` like this 
-`[{ "keys": ["super+d"], "command": "rails_open_view" }]`
-
 ### Usage
 
 Whenever cursor is on a view name in controller, for example on `def index` or `redirect_to :action=>'index'` or `render :action => :new`, hit `super+d` to open `index.html.erb` ( that particular view )
