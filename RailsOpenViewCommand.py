@@ -9,8 +9,6 @@ class RailsOpenViewCommand(sublime_plugin.WindowCommand):
                       r'redirect_to +"%s"',
                       r"redirect_to +'%s'",
                       r'redirect_to +:%s',
-                      r'redirect_to +"%s"',
-                      r"redirect_to +'%s'",
                       r'render +"%s"',
                       r"render +'%s'",
                       r'render +:action +=> +:%s',
